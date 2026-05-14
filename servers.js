@@ -1,17 +1,17 @@
 const express=require("express");
 const dotenv=require("dotenv");
 
-const cross=require("cross");
+const cors=require("cors");
 
-const connectDB=require("./config/db.js");
+const connectDB=require("./config/db");
 
 dotenv.config();
 connectDB();
 
 const app=express();
 
-app.arguments(cross());
-app.use(express.json);
+app.arguments(cors());
+app.use(express.json());
 
 app.get("/",(req,res)=>
 {
