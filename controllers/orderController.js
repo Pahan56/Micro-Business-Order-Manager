@@ -1,4 +1,3 @@
-const { json } = require("express");
 const Order=require("../models/Orders");
 
 const createOrder=async(req,res)=>
@@ -7,11 +6,17 @@ const createOrder=async(req,res)=>
     {
         const order=await Order.create(req.body);
 
-        res.status(201).json(order);
+        res.status(201).json({
+            success:true,
+            data:order,
+
+        });
+        
     }
     catch(error)
     {
         res.status(500).json({
+            success:false,
             message:error.message,
         });
     }
@@ -23,11 +28,17 @@ const getOrders=async(req,res)=>
     try
     {
         const orders=await Order.find();
-        res.status(200).json(orders);
+        res.status(200).json
+        ({
+             success:true,
+             count:orders.length,
+            data:order,
+        })
     }
     catch(error)
     {
         res.status(500).json({
+             success:false,
             message:error.message,
         });
     }
@@ -43,17 +54,24 @@ const getOrderByID=async(req,res)=>
 
         if(!order)
         {
-            return res.status(400),json(
+            return res.status(400).json(
                 {
+                     success:false,
                     message:"Order not found",
                 }
             );
         }
-        res.status(200).json(order);
+        res.status(200).json
+        ({
+             success:true,
+            data:order,
+
+        })
     }
       catch(error)
     {
         res.status(500).json({
+            success:false,
             message:error.message,
         });
     }
@@ -71,6 +89,7 @@ const updateOrder=async(req,res)=>
                 req.body,
                 {
                     new :true,
+                    runValidators:true,
                 }
 
             
@@ -80,15 +99,23 @@ const updateOrder=async(req,res)=>
         {
             return res.status(404).json(
                 {
+                    success:false,
                     message:"Order not found",
                 }
             );
         }
-        res.status(200).json(order);
+        res.status(200).json
+        (
+            {
+                 success:true,
+                 data:order,
+            }
+        )
     }
     catch(error)
     {
         res.status(500).json({
+            success:false,
             message:error.message,
         });
     }
@@ -106,6 +133,7 @@ const deleteOrder=async(req,res)=>
             return res.status(404).json
             (
                 {
+                     success:false,
                     message:"Order not found",
                 }
             );
@@ -113,6 +141,7 @@ const deleteOrder=async(req,res)=>
 
         res.status(200).json(
             {
+                success:true,
                 message:"Order Delete Successfully",
             }
         );
@@ -121,6 +150,7 @@ const deleteOrder=async(req,res)=>
     {
         res.status(500).json(
             {
+                success:false,
                 message:error.message,
             }
         );

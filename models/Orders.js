@@ -6,16 +6,19 @@ const orderSchema=new mongoose.Schema
         {
             type:String,
             required:true,
+            trim:true,
         },
         productName:
         {
             type:String,
             required:true,
+             trim:true,
         },
         quantity:
         {
             type:Number,
             required:true,
+            min:1,
         },
         deliveryDate:
         {
