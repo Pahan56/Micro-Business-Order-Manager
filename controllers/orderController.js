@@ -32,7 +32,7 @@ const getOrders=async(req,res)=>
         ({
              success:true,
              count:orders.length,
-            data:order,
+            data:orders,
         })
     }
     catch(error)
